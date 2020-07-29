@@ -9,5 +9,5 @@ package com.ripple.http.base
  */
 interface IResponseParser {
 
-    fun <T> parse(response: IHttpResponse, dataType: Class<T>): T?
+    fun <T> parse(response: IHttpResponse, dataType: Class<T>): List<T>?
 }

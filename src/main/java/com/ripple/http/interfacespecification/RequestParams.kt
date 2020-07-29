@@ -1,6 +1,6 @@
 package com.ripple.http.interfacespecification
 
-import com.ripple.http.concreterealization.IRequestParams
+import com.ripple.http.base.IRequestParams
 
 /**
  * Author: fanyafeng

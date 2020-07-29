@@ -14,5 +14,5 @@ import com.ripple.task.callback.result.OnItemResult
  */
 interface IHttpRequest {
 
-    fun <T> get(httpParams: IRequestParams.IHttpParams, callback: OnItemResult<T>): OnItemResult<T>
+    fun <T> get(httpParams: IRequestParams.IHttpRequestParams, callback: OnItemResult<T>): OnItemResult<T>
 }

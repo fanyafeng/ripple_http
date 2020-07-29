@@ -13,7 +13,7 @@ interface IHttpResponse {
      * http请求后服务器返回的结果
      * 正常来说不为空
      */
-    var response: String?
+    var response: String
 
     /**
      * 一般情况下，后台返回的数据都会做数据封装，格式统一
@@ -35,7 +35,8 @@ interface IHttpResponse {
     /**
      * http状态码
      */
-    var httpState: Int
+    /**提示信息*/
+    var msg: String
 
     var isListResult: Boolean
 
@@ -43,9 +44,10 @@ interface IHttpResponse {
 
     var parser: IResponseParser
 
+    /**当前这个response的params*/
     var requestParams: IRequestParams.IHttpRequestParams
 
-    fun handleParseData(response: String?): Boolean
+    fun handleParseData(response: String): Boolean
 
     fun parseItemParamType(paramEntity: Any?)
 
