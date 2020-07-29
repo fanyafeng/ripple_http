@@ -18,5 +18,16 @@ enum class HttpMethod {
     /**
      * post请求
      */
-    POST
+    POST,
+
+    /**
+     * head
+     */
+    HEAD,
+
+    DELETE,
+
+    PUT,
+
+    PATCH
 }

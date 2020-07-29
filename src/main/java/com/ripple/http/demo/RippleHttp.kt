@@ -48,7 +48,7 @@ class RippleHttp private constructor() {
         }
     }
 
-    fun <T> getLambda(
+    fun <T> get(
         url: String,
         success: SuccessLambda<T> = null,
         finish: SuccessLambda<Boolean> = null,
@@ -286,30 +286,39 @@ class RippleHttp private constructor() {
         return itemKClass
     }
 
-    private fun getClass(type: Type?, i: Int): Class<*>? {
-        return when (type) {
-            is ParameterizedType -> {
-                ParameterizedTypeUtil.getGenericClass(
-                    type as ParameterizedType?,
-                    i
-                )
-            }
-            is TypeVariable<*> -> {
-                getClass(
-                    type.bounds[0],
-                    0
-                )
-            }
-            else -> {
-                type as Class<*>?
-            }
-        }
-    }
-
     /**
      * 同步get请求
+     * 自己封装同步请求，所有请求以后都会通过此方法走
+     * 不通过okhtt自带的异步请求
      */
-    fun getSync() {
+    fun getSync(url: String) {
+
+        val urlBuilder = url.toHttpUrlOrNull()?.newBuilder()
+        urlBuilder?.addQueryParameter("uid", "uid")
+
+        val request = Request.Builder()
+            .url(urlBuilder!!.build())
+            .get()
+
+        urlBuilder.build().toLogD()
+        request.build().headers.toLogD()
+        /**
+         * 呼叫请求
+         * 此时可以获取到请求是否成发送
+         * 以及对请求进行操作
+         */
+        val realCall = RippleHttpClient.getInstance().newCall(request.build())
+
+        /**
+         * 请求后的返回
+         * 通过此判断请求是否成功
+         */
+        val response = realCall.execute()
+        if (response.isSuccessful) {
+            response.body?.string().toLogD()
+        } else {
+            "请求失败：".toLogD()
+        }
 
     }
 
