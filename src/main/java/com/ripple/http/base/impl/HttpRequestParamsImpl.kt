@@ -1,6 +1,6 @@
 package com.ripple.http.base.impl
 
-import com.ripple.http.IParamsBuilder
+import com.ripple.http.base.IParamsBuilder
 import com.ripple.http.base.IHttpResponse
 import com.ripple.http.base.IRequestParams
 import com.ripple.http.base.abs.AbsHttpRequestParams

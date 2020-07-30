@@ -1,2 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ripple.http" />
+    package="com.ripple.http">
+
+    <application android:usesCleartextTraffic="true"></application>
+</manifest>

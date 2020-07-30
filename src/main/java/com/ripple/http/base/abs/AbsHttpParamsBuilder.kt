@@ -1,7 +1,7 @@
 package com.ripple.http.base.abs
 
 import android.os.Build
-import com.ripple.http.IParamsBuilder
+import com.ripple.http.base.IParamsBuilder
 import com.ripple.http.base.HttpMethod
 import com.ripple.http.base.IRequestParams
 import com.ripple.http.base.annotation.HttpRequest
@@ -15,7 +15,8 @@ import java.util.*
  * Email: fanyafeng@live.cn
  * Description:
  */
-abstract class AbsHttpParamsBuilder : IParamsBuilder<IRequestParams.IHttpRequestParams> {
+abstract class AbsHttpParamsBuilder :
+    IParamsBuilder<IRequestParams.IHttpRequestParams> {
     override fun buildUri(
         param: IRequestParams.IHttpRequestParams,
         httpRequest: HttpRequest?,

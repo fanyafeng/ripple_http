@@ -1,6 +1,5 @@
-package com.ripple.http
+package com.ripple.http.base
 
-import com.ripple.http.base.IRequestParams
 import com.ripple.http.base.annotation.HttpRequest
 import javax.net.ssl.SSLSocketFactory
 

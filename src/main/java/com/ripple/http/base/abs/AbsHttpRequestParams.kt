@@ -1,11 +1,9 @@
 package com.ripple.http.base.abs
 
-import com.ripple.http.IParamsBuilder
+import com.ripple.http.base.IParamsBuilder
 import com.ripple.http.base.HttpMethod
-import com.ripple.http.base.IHttpResponse
 import com.ripple.http.base.IRequestParams
 import com.ripple.http.base.annotation.HttpRequest
-import com.ripple.http.base.impl.HttpParamsBuilderImpl
 import com.ripple.http.util.parseKV
 import com.ripple.tool.check.isEmpty
 import java.io.File

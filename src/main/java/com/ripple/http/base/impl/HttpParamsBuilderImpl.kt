@@ -17,6 +17,6 @@ class HttpParamsBuilderImpl : AbsHttpParamsBuilder() {
     }
 
     override fun getDefaultHost(): String {
-        return "https://www.baidu.com"
+        return "http://10.12.16.198:8080"
     }
 }

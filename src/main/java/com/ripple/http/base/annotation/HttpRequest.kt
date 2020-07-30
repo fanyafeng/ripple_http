@@ -1,6 +1,6 @@
 package com.ripple.http.base.annotation
 
-import com.ripple.http.IParamsBuilder
+import com.ripple.http.base.IParamsBuilder
 import com.ripple.http.base.IRequestParams
 import com.ripple.http.base.abs.AbsHttpParamsBuilder
 import kotlin.reflect.KClass
