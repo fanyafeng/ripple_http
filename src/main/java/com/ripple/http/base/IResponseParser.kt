@@ -1,5 +1,7 @@
 package com.ripple.http.base
 
+import com.alibaba.fastjson.JSONObject
+
 
 /**
  * Author: fanyafeng
@@ -9,5 +11,5 @@ package com.ripple.http.base
  */
 interface IResponseParser {
 
-    fun <T> parse(response: IHttpResponse, dataType: Class<T>): List<T>?
+    fun <T> parseData(jsonObject: JSONObject, response: IHttpResponse): T
 }

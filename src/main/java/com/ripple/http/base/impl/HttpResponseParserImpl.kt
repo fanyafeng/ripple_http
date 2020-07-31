@@ -1,5 +1,6 @@
 package com.ripple.http.base.impl
 
+import com.alibaba.fastjson.JSON
 import com.alibaba.fastjson.JSONObject
 import com.ripple.http.base.IHttpResponse
 import com.ripple.http.base.abs.AbsHttpResponseParser
@@ -11,14 +12,18 @@ import com.ripple.http.base.abs.AbsHttpResponseParser
  * Email: fanyafeng@live.cn
  * Description:
  */
-open class HttpResponseParserImpl: AbsHttpResponseParser() {
-    override fun parseCommonData(jsonObject: JSONObject, response: IHttpResponse) {
-        response.state = jsonObject.getInteger("status")!!
+open class HttpResponseParserImpl : AbsHttpResponseParser() {
+
+    override fun <T> parseData(jsonObject: JSONObject, response: IHttpResponse): T {
+        response.state = jsonObject.getInteger("status")
         response.msg = jsonObject.getString("msg")
         response.data = jsonObject.getString("data")
 
 //        if (response.state != 0) {
 //            throw HttpException(msg = response.message)
 //        }
+
+        val itemClazz = response.itemKClass
+        return JSON.parseObject<T>(response.data, itemClazz)
     }
 }
