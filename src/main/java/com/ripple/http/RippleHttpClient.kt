@@ -1,4 +1,4 @@
-package com.ripple.http.demo
+package com.ripple.http
 
 import okhttp3.OkHttpClient
 
@@ -18,7 +18,7 @@ import okhttp3.OkHttpClient
  * 2.param格式
  * 3./xxx/yyy路径模式
  */
-class RippleHttpClient {
+class RippleHttpClient private constructor() {
     companion object {
 
         @Volatile

@@ -1,6 +1,7 @@
 package com.ripple.http.demo
 
 import com.google.gson.Gson
+import com.ripple.http.RippleHttpClient
 import com.ripple.http.callback.OnHttpResult
 import com.ripple.http.exception.BaseException
 import com.ripple.http.util.ParameterizedTypeUtil
@@ -14,7 +15,6 @@ import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import java.io.IOException
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
-import java.lang.reflect.TypeVariable
 import java.lang.reflect.WildcardType
 import kotlin.reflect.KClass
 import kotlin.reflect.KFunction

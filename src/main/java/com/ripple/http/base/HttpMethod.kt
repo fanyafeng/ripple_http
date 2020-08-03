@@ -20,14 +20,14 @@ enum class HttpMethod {
      */
     POST,
 
-    /**
-     * head
-     */
-    HEAD,
-
-    DELETE,
-
-    PUT,
-
-    PATCH
+//    /**
+//     * head
+//     */
+//    HEAD,
+//
+//    DELETE,
+//
+//    PUT,
+//
+//    PATCH
 }
