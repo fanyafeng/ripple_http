@@ -16,7 +16,7 @@ open class HttpResponseParserImpl : AbsHttpResponseParser() {
 
     override fun <T> parseData(jsonObject: JSONObject, response: IHttpResponse): T {
         response.state = jsonObject.getInteger("status")
-        response.msg = jsonObject.getString("msg")
+        response.message = jsonObject.getString("message")
         response.data = jsonObject.getString("data")
 
 //        if (response.state != 0) {

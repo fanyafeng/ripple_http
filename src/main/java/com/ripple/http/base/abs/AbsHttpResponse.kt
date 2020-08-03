@@ -24,7 +24,7 @@ abstract class AbsHttpResponse : IHttpResponse {
     override var response: String = ""
     override var data: String? = null
     override var state: Int = -1
-    override var msg: String = ""
+    override var message: String = ""
     override var isListResult = false
     override var itemKClass: Class<*> = String::class.java
 

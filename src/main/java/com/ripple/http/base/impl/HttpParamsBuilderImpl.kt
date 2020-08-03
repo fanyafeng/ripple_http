@@ -19,4 +19,8 @@ class HttpParamsBuilderImpl : AbsHttpParamsBuilder() {
     override fun getDefaultHost(): String {
         return "http://10.12.16.198:8080"
     }
+
+    override fun getUserAgent(): String? {
+        return "Android"
+    }
 }

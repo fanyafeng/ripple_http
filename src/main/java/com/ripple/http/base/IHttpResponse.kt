@@ -36,7 +36,7 @@ interface IHttpResponse {
      * http状态码
      */
     /**提示信息*/
-    var msg: String
+    var message: String
 
     var isListResult: Boolean
 
