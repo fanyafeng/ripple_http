@@ -19,7 +19,10 @@ import kotlin.reflect.full.createInstance
  * Email: fanyafeng@live.cn
  * Description:
  */
-abstract class AbsHttpRequestParams(private var url: String = "",private var builder: IParamsBuilder<IRequestParams.IHttpRequestParams>? = null) : IRequestParams.IHttpRequestParams {
+abstract class AbsHttpRequestParams(
+    private var url: String = "",
+    private var builder: IParamsBuilder<IRequestParams.IHttpRequestParams>? = null
+) : IRequestParams.IHttpRequestParams {
 
     /**保存header*/
     private val header = ConcurrentHashMap<String, String>()
@@ -40,6 +43,8 @@ abstract class AbsHttpRequestParams(private var url: String = "",private var bui
 
     /**保存header*/
     private val paramsStream = ConcurrentHashMap<String, Any>()
+
+    private var cancelNext = false
 
     override fun getHeader(): MutableMap<String, String> {
         return header
@@ -129,6 +134,14 @@ abstract class AbsHttpRequestParams(private var url: String = "",private var bui
             return value.time
         }
         return value
+    }
+
+    override fun setCancelNext(cancelNext: Boolean) {
+        this.cancelNext = cancelNext
+    }
+
+    override fun cancelNext(): Boolean? {
+        return cancelNext
     }
 
     /**获取默认的builder*/

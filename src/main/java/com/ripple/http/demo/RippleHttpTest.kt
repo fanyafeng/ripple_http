@@ -29,18 +29,18 @@ import kotlin.reflect.jvm.reflect
  *
  * 此类封装http请求，如 get，set，文件下载
  */
-class RippleHttp private constructor() {
+class RippleHttpTest private constructor() {
 
 
     companion object {
         @Volatile
-        private var instance: RippleHttp? = null
+        private var instance: RippleHttpTest? = null
 
-        fun getInstance(): RippleHttp {
+        fun getInstance(): RippleHttpTest {
             if (instance == null) {
-                synchronized(RippleHttp::class) {
+                synchronized(RippleHttpTest::class) {
                     if (instance == null) {
-                        instance = RippleHttp()
+                        instance = RippleHttpTest()
                     }
                 }
             }

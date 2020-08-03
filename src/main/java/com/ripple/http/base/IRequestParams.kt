@@ -68,6 +68,16 @@ interface IRequestParams {
 
         /**是否使用json格式上传数据*/
         fun isUseJsonFormat() = false
+
+        /**
+         * 获取下一个任务取消状态
+         */
+        fun cancelNext(): Boolean?
+
+        /**
+         * 设置下一个请求是否取消
+         */
+        fun setCancelNext(cancelNext: Boolean)
     }
 
     /**获取请求入参*/
