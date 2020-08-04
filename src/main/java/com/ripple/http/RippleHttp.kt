@@ -14,10 +14,13 @@ import java.util.concurrent.LinkedBlockingDeque
  * Data: 2020/7/20 19:46
  * Email: fanyafeng@live.cn
  * Description:
+ *
+ * deque是唯一的
  */
 object RippleHttp {
     /**
      * get请求
+     *
      */
     fun <T> get(params: IRequestParams.IHttpRequestParams, callback: OnHttpResult<T>): IHttpLink {
         val httpLinkImpl = HttpLinkImpl()
@@ -34,6 +37,7 @@ object RippleHttp {
 
     /**
      * 同时调用get请求
+     *
      */
     fun <T> withGet(deque: BlockingDeque<Call>, list: MutableList<Call>) {
     }
