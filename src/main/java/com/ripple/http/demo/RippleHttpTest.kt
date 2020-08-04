@@ -1,6 +1,6 @@
 package com.ripple.http.demo
 
-import com.google.gson.Gson
+import com.alibaba.fastjson.JSON
 import com.ripple.http.RippleHttpClient
 import com.ripple.http.callback.OnHttpResult
 import com.ripple.http.exception.BaseException
@@ -131,7 +131,7 @@ class RippleHttpTest private constructor() {
      * 以接口的方式抽离
      */
     fun <S> parseJsonString(result: String?, typeOf: Type): S {
-        return Gson().fromJson(result, typeOf)
+        return JSON.parseObject(result, typeOf)
     }
 
     /**

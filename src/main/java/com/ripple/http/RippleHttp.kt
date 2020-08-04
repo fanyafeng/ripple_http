@@ -22,10 +22,8 @@ object RippleHttp {
      * get请求
      *
      */
-    fun <T> get(params: IRequestParams.IHttpRequestParams, callback: OnHttpResult<T>): IHttpLink {
-        val httpLinkImpl = HttpLinkImpl()
+    fun <T> get(params: IRequestParams.IHttpRequestParams, callback: OnHttpResult<T>) {
         HttpTask.get(params, callback)
-        return httpLinkImpl
     }
 
     /**
@@ -35,36 +33,36 @@ object RippleHttp {
         HttpTask.post(params, callback)
     }
 
-    /**
-     * 同时调用get请求
-     *
-     */
-    fun <T> withGet(deque: BlockingDeque<Call>, list: MutableList<Call>) {
-    }
-
-    /**
-     * 上一个任务完成后
-     * 再去掉用get请求
-     */
-    fun <T> thenGet(deque: BlockingDeque<Call>) {
-        //new MutableList<Call>
-
-    }
-
-    /**
-     * 同时调用post请求
-     */
-    fun <T> withPost(deque: BlockingDeque<Call>, list: MutableList<Call>) {
-
-    }
-
-    /**
-     * 上一个任务完成后再去调用post请求
-     */
-    fun <T> thenPost(deque: BlockingDeque<Call>) {
-        //new MutableList<Call>
-
-    }
+//    /**
+//     * 同时调用get请求
+//     *
+//     */
+//    fun <T> withGet(deque: BlockingDeque<Call>, list: MutableList<Call>) {
+//    }
+//
+//    /**
+//     * 上一个任务完成后
+//     * 再去掉用get请求
+//     */
+//    fun <T> thenGet(deque: BlockingDeque<Call>) {
+//        //new MutableList<Call>
+//
+//    }
+//
+//    /**
+//     * 同时调用post请求
+//     */
+//    fun <T> withPost(deque: BlockingDeque<Call>, list: MutableList<Call>) {
+//
+//    }
+//
+//    /**
+//     * 上一个任务完成后再去调用post请求
+//     */
+//    fun <T> thenPost(deque: BlockingDeque<Call>) {
+//        //new MutableList<Call>
+//
+//    }
 
 
     /**
