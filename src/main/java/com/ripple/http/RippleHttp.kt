@@ -1,13 +1,15 @@
 package com.ripple.http
 
+import com.ripple.http.base.HttpMethod
 import com.ripple.http.base.IRequestParams
 import com.ripple.http.callback.OnHttpResult
 import com.ripple.http.impl.HttpTask
-import com.ripple.http.link.IHttpLink
-import com.ripple.http.link.impl.HttpLinkImpl
+import com.ripple.http.impl.OkHttpClientDelegate
+import com.ripple.http.link.HttpLinkModel
+import com.ripple.tool.kttypelians.SuccessLambda
 import okhttp3.Call
+import java.util.*
 import java.util.concurrent.BlockingDeque
-import java.util.concurrent.LinkedBlockingDeque
 
 /**
  * Author: fanyafeng
@@ -18,55 +20,44 @@ import java.util.concurrent.LinkedBlockingDeque
  * deque是唯一的
  */
 object RippleHttp {
+
     /**
      * get请求
      *
      */
-    fun <T> get(params: IRequestParams.IHttpRequestParams, callback: OnHttpResult<T>) {
-        HttpTask.get(params, callback)
+    fun <T> get(
+        params: IRequestParams.IHttpRequestParams,
+        callback: OnHttpResult<T>
+    ): RippleHttpLink {
+        val httpTask = HttpTask()
+        httpTask.get(params, callback)
+        return RippleHttpLink(httpTask)
     }
 
     /**
      * post请求
      */
-    fun <T> post(params: IRequestParams.IHttpRequestParams, callback: OnHttpResult<T>) {
-        HttpTask.post(params, callback)
+    fun <T> post(
+        params: IRequestParams.IHttpRequestParams,
+        callback: OnHttpResult<T>
+    ): RippleHttpLink {
+        val httpTask = HttpTask()
+        httpTask.post(params, callback)
+        return RippleHttpLink(httpTask)
     }
 
-//    /**
-//     * 同时调用get请求
-//     *
-//     */
-//    fun <T> withGet(deque: BlockingDeque<Call>, list: MutableList<Call>) {
-//    }
-//
-//    /**
-//     * 上一个任务完成后
-//     * 再去掉用get请求
-//     */
-//    fun <T> thenGet(deque: BlockingDeque<Call>) {
-//        //new MutableList<Call>
-//
-//    }
-//
-//    /**
-//     * 同时调用post请求
-//     */
-//    fun <T> withPost(deque: BlockingDeque<Call>, list: MutableList<Call>) {
-//
-//    }
-//
-//    /**
-//     * 上一个任务完成后再去调用post请求
-//     */
-//    fun <T> thenPost(deque: BlockingDeque<Call>) {
-//        //new MutableList<Call>
-//
-//    }
+    internal fun <T> request(
+        params: IRequestParams.IHttpRequestParams,
+        lambda: SuccessLambda<Any>,
+        callback: OnHttpResult<T>
+    ): RippleHttpLinkKotlin {
+        val httpTask = HttpTask()
+        if (params.method == HttpMethod.POST) {
+            httpTask.post(params, callback, lambda)
+        } else {
+            httpTask.get(params, callback, lambda)
+        }
+        return RippleHttpLinkKotlin(httpTask)
+    }
 
-
-    /**
-     * .thenPost or .thenGet肯定是队列的头
-     * .withPost or .withGet肯定为列表的子
-     */
 }

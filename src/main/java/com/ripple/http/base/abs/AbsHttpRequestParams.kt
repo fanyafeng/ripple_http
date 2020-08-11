@@ -9,6 +9,8 @@ import com.ripple.tool.check.isEmpty
 import java.io.File
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
+import javax.net.ssl.SSLSocketFactory
+import javax.net.ssl.X509TrustManager
 import kotlin.collections.ArrayList
 import kotlin.reflect.full.createInstance
 
@@ -146,4 +148,5 @@ abstract class AbsHttpRequestParams(
 
     /**获取默认的builder*/
     abstract fun getDefaultParamBuilder(): IParamsBuilder<IRequestParams.IHttpRequestParams>
+
 }

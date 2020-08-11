@@ -35,12 +35,12 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     api 'com.squareup.okhttp3:okhttp:4.7.2'
-//    implementation project(path: ':ripple_tool')
-    implementation 'com.ripple.component:tool:0.0.8'
-//    implementation project(path: ':ripple_log')
-    implementation 'com.ripple.component:log:0.0.3'
-//    api project(path: ':ripple_task')
-    implementation 'com.ripple.component:task:0.0.9'
+    implementation project(path: ':ripple_tool')
+//    implementation 'com.ripple.component:tool:0.0.8'
+    implementation project(path: ':ripple_log')
+//    implementation 'com.ripple.component:log:0.0.3'
+    api project(path: ':ripple_task')
+//    implementation 'com.ripple.component:task:0.0.9'
     api 'com.alibaba:fastjson:1.1.67.android'
     api 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7'
     api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.0'

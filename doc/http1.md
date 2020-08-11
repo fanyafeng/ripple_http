@@ -287,8 +287,23 @@ PS：这里我自己通过`SpringBoot`搭建了一个服务器，`Mock`的好多
     }
 ```
 
-### 1.2 抽象http get请求
+### 1.2 抽象http get/post请求
 大体分为三部分，因为我一边写博客一遍写代码，难免过程会有错误，后面以最终实现的代码为最终结果，心中想要实现的效果大体如下，先来列一下要实现的目标
+最终是要下面两个接口的具体实现
+```
+interface IHttpRequest {
+
+    /**
+     * get请求
+     */
+    fun <T> get(params: IRequestParams.IHttpRequestParams, callback: OnHttpResult<T>)
+
+    /**
+     * post请求
+     */
+    fun <T> post(params: IRequestParams.IHttpRequestParams, callback: OnHttpResult<T>)
+}
+```
 #### 1.2.1 client基础配置
 基础配置一般是不动的，但是为了防止特殊情况还是需要支持用户修改，这里大体罗列了一下基础配置，并且把通常不会改的放到了同一个接口中。
 1. 读取超时时间
@@ -296,5 +311,218 @@ PS：这里我自己通过`SpringBoot`搭建了一个服务器，`Mock`的好多
 3. 链接时间
 4. 请求头
 5. 编码
+6. 上传格式
+7. `ssl`证书信息
 
 开始定义接口：
+
+```
+    interface IHttpRequestParams : IRequestParams {
+
+        var response: IHttpResponse
+
+        /**
+         * 请求方法
+         * 例如：get,post等等
+         */
+        var method: HttpMethod
+
+
+        /**
+         * 请求头
+         * 构建http的请求头
+         */
+        fun getHeader(): MutableMap<String, String>
+
+        fun addHeader(key: String, value: String)
+
+        fun getUrl(): String?
+
+        fun setUrl(url: String)
+
+        /**获取连接超时，带有默认设置*/
+        fun getConnectTimeOut() = CONNECT_TIMEOUT
+
+        /**获取读取超时，带有默认设置*/
+        fun getReadTimeOut() = READ_TIMEOUT
+
+        /**获取写入超时，带有默认设置*/
+        fun getWriteTimeOut() = WRITE_TIMEOUT
+
+        /**是否在请求过程中启用cookie*/
+        fun isUseCookie(): Boolean = true
+
+        /**获取编码信息，带有默认编码*/
+        fun getCharset() = CHARSET
+
+        /**是否使用json格式上传数据*/
+        fun isUseJsonFormat() = false
+
+        /**
+         * 获取下一个任务取消状态
+         */
+        fun cancelNext(): Boolean?
+
+        /**
+         * 设置下一个请求是否取消
+         */
+        fun setCancelNext(cancelNext: Boolean)
+
+        /**
+         * 构建https签名
+         */
+        fun getSSLSocketFactory(): SSLSocketFactory? = null
+
+        fun getX509TrustManager(): X509TrustManager? = null
+    }
+```
+#### 1.2.2 下一个就是每个请求的参数配置
+这个要区分一下`get`和`post`请求，但是又需要自己去进行筛选。
+大体可以分为两种，`json`的话是将`param`序列化为`json`
+1. `param`入参对应后台：`@RequestParam`
+2. `path`入参以及：`@PathVariable`
+下面是接口定义
+
+```
+interface IRequestParams {
+
+    /**获取请求入参*/
+    fun getParams(): MutableMap<String, Any>
+
+    /**获取pathParam请求入参*/
+    fun getPathParams(): MutableList<Any>
+
+    /**添加请求参数*/
+    fun addParam(key: String, value: Any)
+
+    /**添加pathParam请求参数*/
+    fun addPathParam(value: Any)
+
+    fun containParam(key: String): Boolean
+
+    /**初始化params*/
+    fun init()
+
+}
+```
+#### 1.2.3 初始化构建完成后开始解析
+请求参数构建成功后，可以通过`okhttp`发送请求，然后进行相应的解析
+内置一个抽象实现类，如果感觉不好可以自己再重写，实现代码有点多，而且知识点也涉及的比较多，暂时这里不贴代码了，后面会专门开一篇文章讲一下反射那个，方法的泛型是根据反射拿到的。
+
+```
+interface IHttpResponse {
+
+    /**
+     * http请求后服务器返回的结果
+     * 正常来说不为空
+     */
+    var response: String
+
+    /**
+     * 一般情况下，后台返回的数据都会做数据封装，格式统一
+     *
+     * 如下：
+     * 其中data中可能为list
+     * {
+     *      "code":200,
+     *      "msg":"请求成功",
+     *      "result":"成功",
+     *      "data":"测试"
+     * }
+     *
+     */
+    var data: String?
+
+    var state: Int
+
+    /**
+     * http状态码
+     */
+    /**提示信息*/
+    var message: String
+
+    /**
+     * 解析结果是否为list
+     */
+    var isListResult: Boolean
+
+    /**
+     * 解析结果后的的class
+     */
+    var itemKClass: Class<*>
+
+    /**
+     * 序列化返回结果
+     */
+    var parser: IResponseParser
+
+    /**当前这个response的params*/
+    var requestParams: IRequestParams.IHttpRequestParams
+
+    /**
+     * 是否进行自定义解析
+     * 如果返回false则是交给框架解析
+     */
+    fun handleParseData(response: String): Boolean
+
+    /**
+     * 解析传入泛型类型
+     */
+    fun parseItemParamType(paramEntity: Any?)
+
+    fun isSuccess() = true
+}
+```
+#### 1.2.5 再有就是数据解析了
+这里面根据统一的协议写了个实现类，接口定义和实现类如下
+接口：
+
+```
+interface IResponseParser {
+
+    /**
+     * 解析返回数据为json对象
+     * 采用的是fastjson解析
+     */
+    fun <T> parseData(jsonObject: JSONObject, response: IHttpResponse): T
+}
+```
+实现类：
+
+```
+open class HttpResponseParserImpl : AbsHttpResponseParser() {
+
+    override fun <T> parseData(jsonObject: JSONObject, response: IHttpResponse): T {
+        response.state = jsonObject.getInteger("status")
+        response.message = jsonObject.getString("message")
+        response.data = jsonObject.getString("data")
+
+//        if (response.state != 0) {
+//            throw HttpException(msg = response.message)
+//        }
+
+        val itemClazz = response.itemKClass
+        return JSON.parseObject<T>(response.data, itemClazz)
+    }
+}
+```
+### 1.3 下面开始使用构建okhttp client
+本来想贴代码的，但是有点多，写类名了，因为注释中写的很详细，然后这里说一下思路以及为什么这么做，`OkHttpClient`是采用单例直接用的一个，通过`params`每次去赋值，同理，`body`也是每次都去取`params`中的参数进行构建，这里就完成了`Call`对象的获取，之后就可以采用同步方式进行请求解析回调，这样方便之后链式调用的封装，所以返回的对象为`Call`
+代码类：
+
+```
+//构建类
+RippleHttpClient.getInstance()
+//请求实现类
+HttpTask.kt
+```
+
+至此，正常的请求就可以完成了，写的比较着急，也没有加`kotlin`顶层函数的封装，后续打算加上这些以及以下的这种链式以及同步的调用
+PS：工作忙，写的博客有点敷衍，后面会把这里面需要注意的东西每个都拿出来专门做一个博客去讲，因为写一个框架类的东西不是一蹴而就而且还需要需要知识的积累，如果每个都讲的特别细估计得好多篇博客才能搞定，上面两篇文章算是把思路讲清了，后面的实现就看写的人如何去写了。
+
+```
+httpGet{
+}.thenGet{
+}.withPost{
+}
+```

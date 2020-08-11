@@ -2,6 +2,8 @@ package com.ripple.http.callback
 
 import com.ripple.http.exception.BaseException
 import com.ripple.task.callback.*
+import java.lang.reflect.Type
+import kotlin.reflect.KType
 
 
 /**
@@ -15,6 +17,11 @@ interface OnHttpResult<T> : OnItemSuccess<T>,
     OnItemStart<Unit>,
     OnItemDoing<Long>,
     OnItemFailed<BaseException> {
+
+    /**可以提供type的callback*/
+    interface Typed {
+        var typed: Type?
+    }
 
     /**
      * 任务开始回调

@@ -11,5 +11,9 @@ import com.alibaba.fastjson.JSONObject
  */
 interface IResponseParser {
 
+    /**
+     * 解析返回数据为json对象
+     * 采用的是fastjson解析
+     */
     fun <T> parseData(jsonObject: JSONObject, response: IHttpResponse): T
 }

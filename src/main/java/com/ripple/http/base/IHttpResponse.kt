@@ -38,17 +38,33 @@ interface IHttpResponse {
     /**提示信息*/
     var message: String
 
+    /**
+     * 解析结果是否为list
+     */
     var isListResult: Boolean
 
+    /**
+     * 解析结果后的的class
+     */
     var itemKClass: Class<*>
 
+    /**
+     * 序列化返回结果
+     */
     var parser: IResponseParser
 
     /**当前这个response的params*/
     var requestParams: IRequestParams.IHttpRequestParams
 
+    /**
+     * 是否进行自定义解析
+     * 如果返回false则是交给框架解析
+     */
     fun handleParseData(response: String): Boolean
 
+    /**
+     * 解析传入泛型类型
+     */
     fun parseItemParamType(paramEntity: Any?)
 
     fun isSuccess() = true

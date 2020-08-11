@@ -1,6 +1,6 @@
 package com.ripple.http.base
 
-import com.ripple.task.callback.result.OnItemResult
+import com.ripple.http.callback.OnHttpResult
 
 
 /**
@@ -14,5 +14,39 @@ import com.ripple.task.callback.result.OnItemResult
  */
 interface IHttpRequest {
 
-    fun <T> get(httpParams: IRequestParams.IHttpRequestParams, callback: OnItemResult<T>): OnItemResult<T>
+    /**
+     * get请求
+     */
+    fun <T> get(
+        params: IRequestParams.IHttpRequestParams,
+        callback: OnHttpResult<T>
+    )
+
+    fun <T> withGet(
+        params: IRequestParams.IHttpRequestParams,
+        callback: OnHttpResult<T>
+    )
+
+    fun <T> thenGet(
+        params: IRequestParams.IHttpRequestParams,
+        callback: OnHttpResult<T>
+    )
+
+    /**
+     * post请求
+     */
+    fun <T> post(
+        params: IRequestParams.IHttpRequestParams,
+        callback: OnHttpResult<T>
+    )
+
+    fun <T> withPost(
+        params: IRequestParams.IHttpRequestParams,
+        callback: OnHttpResult<T>
+    )
+
+    fun <T> thenPost(
+        params: IRequestParams.IHttpRequestParams,
+        callback: OnHttpResult<T>
+    )
 }

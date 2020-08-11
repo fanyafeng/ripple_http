@@ -5,6 +5,8 @@ import com.ripple.http.base.IRequestParams
 import com.ripple.http.RippleHttpClient
 import com.ripple.http.interceptor.GzipRequestInterceptor
 import com.ripple.http.util.getRequestBody
+import com.ripple.log.extend.logD
+import com.ripple.log.extend.logE
 import okhttp3.*
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import java.util.concurrent.TimeUnit
@@ -16,7 +18,7 @@ import java.util.concurrent.TimeUnit
  * Email: fanyafeng@live.cn
  * Description:
  */
-internal object OkHttpClientDelegate {
+internal class OkHttpClientDelegate {
 
     /**
      * 同步get请求
@@ -41,6 +43,17 @@ internal object OkHttpClientDelegate {
         return clientResult.newCall(requestResult)
     }
 
+    fun request(params: IRequestParams.IHttpRequestParams): Call {
+        val clientResult = getClientResult(params)
+        val method = params.method
+        val requestResult = getRequestResult(
+            params,
+            if (method == HttpMethod.GET) null else getRequestBody(params),
+            params.method
+        )
+        return clientResult.newCall(requestResult)
+    }
+
 
     /**
      * 获取http client
@@ -51,6 +64,14 @@ internal object OkHttpClientDelegate {
         client.writeTimeout(params.getWriteTimeOut(), TimeUnit.MILLISECONDS)
         client.connectTimeout(params.getConnectTimeOut(), TimeUnit.MILLISECONDS)
         client.addInterceptor(GzipRequestInterceptor())
+        /**
+         * 添加信任证书
+         */
+        if (params.getSSLSocketFactory() != null && params.getX509TrustManager() != null) {
+            client.sslSocketFactory(params.getSSLSocketFactory()!!, params.getX509TrustManager()!!)
+        } else {
+            logE("ssl证书信息未设置")
+        }
         return client.build()
     }
 

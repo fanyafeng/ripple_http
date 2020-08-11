@@ -1,5 +1,8 @@
 package com.ripple.http.base
 
+import javax.net.ssl.SSLSocketFactory
+import javax.net.ssl.X509TrustManager
+
 
 /**
  * Author: fanyafeng
@@ -78,6 +81,13 @@ interface IRequestParams {
          * 设置下一个请求是否取消
          */
         fun setCancelNext(cancelNext: Boolean)
+
+        /**
+         * 构建https签名
+         */
+        fun getSSLSocketFactory(): SSLSocketFactory? = null
+
+        fun getX509TrustManager(): X509TrustManager? = null
     }
 
     /**获取请求入参*/
@@ -94,7 +104,7 @@ interface IRequestParams {
 
     fun containParam(key: String): Boolean
 
-    /**初始话params*/
+    /**初始化params*/
     fun init()
 
 }

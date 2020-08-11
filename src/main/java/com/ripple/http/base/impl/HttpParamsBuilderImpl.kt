@@ -1,7 +1,9 @@
 package com.ripple.http.base.impl
 
+import com.ripple.http.RippleHttpClient
 import com.ripple.http.base.IRequestParams
 import com.ripple.http.base.abs.AbsHttpParamsBuilder
+import javax.net.ssl.SSLSocketFactory
 
 
 /**
@@ -11,10 +13,6 @@ import com.ripple.http.base.abs.AbsHttpParamsBuilder
  * Description:
  */
 class HttpParamsBuilderImpl : AbsHttpParamsBuilder() {
-
-    override fun buildParams(params: IRequestParams.IHttpRequestParams) {
-        super.buildParams(params)
-    }
 
     override fun getDefaultHost(): String {
         return "http://10.12.16.198:8080"
