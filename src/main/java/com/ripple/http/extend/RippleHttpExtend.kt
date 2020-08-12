@@ -1,21 +1,13 @@
 package com.ripple.http.extend
 
 import com.ripple.http.RippleHttp
-import com.ripple.http.RippleHttpLink
 import com.ripple.http.RippleHttpLinkKotlin
 import com.ripple.http.base.HttpMethod
 import com.ripple.http.base.IRequestParams
 import com.ripple.http.callback.OnHttpResult
-import com.ripple.http.demo.isArrayType
 import com.ripple.http.exception.BaseException
-import com.ripple.log.tpyeextend.toLogD
 import com.ripple.tool.kttypelians.FinishLambda
 import com.ripple.tool.kttypelians.SuccessLambda
-import kotlin.reflect.KClass
-import kotlin.reflect.KFunction
-import kotlin.reflect.KType
-import kotlin.reflect.full.createType
-import kotlin.reflect.jvm.reflect
 
 
 /**

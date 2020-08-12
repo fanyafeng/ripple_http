@@ -358,7 +358,7 @@ internal class HttpTask : IHttpRequest {
                 override fun onItemFinish(finishResult: Boolean) {
                     callback.onItemFinish(finishResult)
                     executeCount.incrementAndGet()
-                    cancelNext.set(headParams.cancelNext() ?: false)
+                    cancelNext.set(params.cancelNext() ?: false)
                     if (executeCount.get() == totalCount) {
                         var targetIndex = index + 1
                         if (!cancelNext.get()) {
@@ -498,7 +498,11 @@ internal class HttpTask : IHttpRequest {
     ) {
         callback.onItemStart(Unit)
         callback.onItemDoing(OnItemDoing.CODE_ITEM_DOING_START)
-        GlobalScope.launch {
+        val coroutineScope =
+            CoroutineScope(
+                Executors.newFixedThreadPool(MAX_PRIORITY_THREADS).asCoroutineDispatcher()
+            )
+        coroutineScope.launch {
             launch(Dispatchers.IO) {
                 /**
                  * 初始化params
