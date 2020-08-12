@@ -1,6 +1,7 @@
 package com.ripple.http.base
 
 import com.ripple.http.base.annotation.HttpRequest
+import java.io.Serializable
 import javax.net.ssl.SSLSocketFactory
 
 
@@ -10,7 +11,7 @@ import javax.net.ssl.SSLSocketFactory
  * Email: fanyafeng@live.cn
  * Description:
  */
-interface IParamsBuilder<in T : IRequestParams> {
+interface IParamsBuilder<in T : IRequestParams> : Serializable {
     /**
      * 根据参数，构建请求的uri
      */

@@ -1,5 +1,7 @@
 package com.ripple.http.base
 
+import java.io.Serializable
+
 
 /**
  * Author: fanyafeng
@@ -7,7 +9,7 @@ package com.ripple.http.base
  * Email: fanyafeng@live.cn
  * Description:
  */
-interface IHttpResponse {
+interface IHttpResponse : Serializable {
 
     /**
      * http请求后服务器返回的结果

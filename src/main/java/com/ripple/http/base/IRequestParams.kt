@@ -1,5 +1,6 @@
 package com.ripple.http.base
 
+import java.io.Serializable
 import javax.net.ssl.SSLSocketFactory
 import javax.net.ssl.X509TrustManager
 
@@ -10,7 +11,7 @@ import javax.net.ssl.X509TrustManager
  * Email: fanyafeng@live.cn
  * Description:
  */
-interface IRequestParams {
+interface IRequestParams: Serializable {
 
     companion object {
         /**

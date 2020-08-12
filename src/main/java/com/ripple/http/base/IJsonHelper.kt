@@ -1,6 +1,7 @@
 package com.ripple.http.base
 
 import com.alibaba.fastjson.JSONArray
+import java.io.Serializable
 
 
 /**
@@ -9,7 +10,7 @@ import com.alibaba.fastjson.JSONArray
  * Email: fanyafeng@live.cn
  * Description:
  */
-interface IJsonHelper {
+interface IJsonHelper : Serializable {
     /**将一个对象转换为一个json*/
     fun toJson(any: Any?): String
 

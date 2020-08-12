@@ -1,6 +1,7 @@
 package com.ripple.http.base
 
 import com.alibaba.fastjson.JSONObject
+import java.io.Serializable
 
 
 /**
@@ -9,7 +10,7 @@ import com.alibaba.fastjson.JSONObject
  * Email: fanyafeng@live.cn
  * Description:
  */
-interface IResponseParser {
+interface IResponseParser : Serializable {
 
     /**
      * 解析返回数据为json对象

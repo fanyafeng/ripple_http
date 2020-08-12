@@ -1,6 +1,7 @@
 package com.ripple.http.base
 
 import com.ripple.http.callback.OnHttpResult
+import java.io.Serializable
 
 
 /**
@@ -12,7 +13,7 @@ import com.ripple.http.callback.OnHttpResult
  * http的请求接口
  * 一般http有get，post等
  */
-interface IHttpRequest {
+interface IHttpRequest : Serializable {
 
     /**
      * get请求
